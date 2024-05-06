@@ -1,0 +1,361 @@
+<!--
+	此示例下载自 https://echarts.apache.org/examples/zh/editor.html?c=map-bar-morph&lang=js
+-->
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+
+<head>
+	<meta charset="utf-8">
+</head>
+
+<body style="height: 100%; margin: 0">
+	<div id="container" style="height: 100%"></div>
+
+	<script type="text/javascript" src="https://cdn.staticfile.net/jquery/3.7.1/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="https://registry.npmmirror.com/echarts/5.5.0/files/dist/echarts.min.js"></script>
+
+	<!-- Uncomment this line if you want to dataTool extension
+  <script type="text/javascript" src="https://registry.npmmirror.com/echarts/5.5.0/files/dist/extension/dataTool.min.js"></script>
+  -->
+	<!-- Uncomment this line if you want to use gl extension
+  <script type="text/javascript" src="https://registry.npmmirror.com/echarts-gl/2/files/dist/echarts-gl.min.js"></script>
+  -->
+	<!-- Uncomment this line if you want to echarts-stat extension
+  <script type="text/javascript" src="https://registry.npmmirror.com/echarts-stat/latest/files/dist/ecStat.min.js"></script>
+  -->
+	<!-- Uncomment this line if you want to use map
+  <script type="text/javascript" src="https://registry.npmmirror.com/echarts/4.9.0/files/map/js/china.js"></script>
+  <script type="text/javascript" src="https://registry.npmmirror.com/echarts/4.9.0/files/map/js/world.js"></script>
+  -->
+	<!-- Uncomment these two lines if you want to use bmap extension
+  <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=YOUR_API_KEY"></script>
+  <script type="text/javascript" src="https://registry.npmmirror.com/echarts/5.5.0/files/dist/extension/bmap.min.js"></script>
+  -->
+
+  
+
+	<script type="text/javascript">
+		var dom = document.getElementById('container');
+		var myChart = echarts.init(dom, null, {
+			renderer: 'canvas',
+			useDirtyRect: false
+		});
+		var app = {};
+
+		var option;
+
+		myChart.showLoading();
+		$.get('Data/USA.json', function (usaJson) {
+			myChart.hideLoading();
+			echarts.registerMap('USA', usaJson);
+			var data = [
+				{ name: 'Aberdeen', value: 3635.0 },
+				{ name: 'Aberystwyth', value: 395.0 },
+				{ name: 'Alness and Invergordon', value: 90.0 },
+				{ name: 'Andover', value: 1020.0 },
+				{ name: 'Arbroath and Montrose', value: 110.0 },
+				{ name: 'Ashford', value: 1700.0 },
+				{ name: 'Aviemore and Grantown-on-Spey', value: 50.0 },
+				{ name: 'Ayr', value: 425.0 },
+				{ name: 'Ballymena', value: 170.0 },
+				{ name: 'Banbury', value: 1570.0 },
+				{ name: 'Bangor and Holyhead', value: 845.0 },
+				{ name: 'Barnsley', value: 1470.0 },
+				{ name: 'Barnstaple', value: 1045.0 },
+				{ name: 'Barrow-in-Furness', value: 625.0 },
+				{ name: 'Basingstoke', value: 7590.0 },
+				{ name: 'Bath', value: 4975.0 },
+				{ name: 'Bedford', value: 2965.0 },
+				{ name: 'Belfast', value: 13185.0 },
+				{ name: 'Berwick', value: 145.0 },
+				{ name: 'Bideford', value: 275.0 },
+				{ name: 'Birkenhead', value: 1790.0 },
+				{ name: 'Birmingham', value: 19315.0 },
+				{ name: 'Blackburn', value: 1780.0 },
+				{ name: 'Blackpool', value: 1950.0 },
+				{ name: 'Blandford Forum and Gillingham', value: 645.0 },
+				{ name: 'Blyth and Ashington', value: 670.0 },
+				{ name: 'Boston', value: 245.0 },
+				{ name: 'Bournemouth', value: 4420.0 },
+				{ name: 'Bradford', value: 6510.0 },
+				{ name: 'Brecon', value: 245.0 },
+				{ name: 'Bridgend', value: 965.0 },
+				{ name: 'Bridgwater', value: 380.0 },
+				{ name: 'Bridlington', value: 80.0 },
+				{ name: 'Bridport', value: 220.0 },
+				{ name: 'Brighton', value: 8105.0 },
+				{ name: 'Bristol', value: 16670.0 },
+				{ name: 'Broadford and Kyle of Lochalsh', value: 85.0 },
+				{ name: 'Bude', value: 200.0 },
+				{ name: 'Burnley', value: 705.0 },
+				{ name: 'Burton upon Trent', value: 1265.0 },
+				{ name: 'Bury St Edmunds', value: 1705.0 },
+				{ name: 'Buxton', value: 310.0 },
+				{ name: 'Cambridge', value: 18005.0 },
+				{ name: 'Campbeltown', value: 0.0 },
+				{ name: 'Canterbury', value: 1940.0 },
+				{ name: 'Cardiff', value: 7395.0 },
+				{ name: 'Cardigan', value: 220.0 },
+				{ name: 'Carlisle', value: 895.0 },
+				{ name: 'Chelmsford', value: 7660.0 },
+				{ name: 'Cheltenham', value: 3895.0 },
+				{ name: 'Chester', value: 5485.0 },
+				{ name: 'Chesterfield', value: 1490.0 },
+				{ name: 'Chichester and Bognor Regis', value: 3475.0 },
+				{ name: 'Cinderford and Ross-on-Wye', value: 635.0 },
+				{ name: 'Clacton', value: 460.0 },
+				{ name: 'Colchester', value: 7135.0 },
+				{ name: 'Coleraine', value: 320.0 },
+				{ name: 'Colwyn Bay', value: 305.0 },
+				{ name: 'Cookstown and Magherafelt', value: 225.0 },
+				{ name: 'Corby', value: 355.0 },
+				{ name: 'Coventry', value: 5680.0 },
+				{ name: 'Craigavon', value: 375.0 },
+				{ name: 'Crawley', value: 12340.0 },
+				{ name: 'Crewe', value: 4205.0 },
+				{ name: 'Cromer and Sheringham', value: 285.0 },
+				{ name: 'Dalbeattie and Castle Douglas', value: 50.0 },
+				{ name: 'Darlington', value: 545.0 },
+				{ name: 'Derby', value: 5105.0 },
+				{ name: 'Derry', value: 850.0 },
+				{ name: 'Doncaster', value: 820.0 },
+				{ name: 'Dorchester and Weymouth', value: 875.0 },
+				{ name: 'Dudley', value: 3365.0 },
+				{ name: 'Dumbarton and Helensburgh', value: 175.0 },
+				{ name: 'Dumfries', value: 255.0 },
+				{ name: 'Dundee', value: 2610.0 },
+				{ name: 'Dunfermline and Kirkcaldy', value: 1675.0 },
+				{ name: 'Dungannon', value: 260.0 },
+				{ name: 'Dunoon and Rothesay', value: 60.0 },
+				{ name: 'Durham and Bishop Auckland', value: 705.0 },
+				{ name: 'Eastbourne', value: 3770.0 },
+				{ name: 'Edinburgh', value: 12590.0 },
+				{ name: 'Eilean Siar', value: 0.0 },
+				{ name: 'Elgin', value: 265.0 },
+				{ name: 'Enniskillen', value: 125.0 },
+				{ name: 'Evesham', value: 870.0 },
+				{ name: 'Exeter', value: 4315.0 },
+				{ name: 'Falkirk and Stirling', value: 1495.0 },
+				{ name: 'Falmouth', value: 555.0 },
+				{ name: 'Folkestone and Dover', value: 790.0 },
+				{ name: 'Fort William', value: 70.0 },
+				{ name: 'Fraserburgh', value: 40.0 },
+				{ name: 'Galashiels and Peebles', value: 465.0 },
+				{ name: 'Girvan', value: 20.0 },
+				{ name: 'Glasgow', value: 16890.0 },
+				{ name: 'Gloucester', value: 2720.0 },
+				{ name: 'Golspie and Brora', value: 20.0 },
+				{ name: 'Grantham', value: 860.0 },
+				{ name: 'Great Yarmouth', value: 300.0 },
+				{ name: 'Greenock', value: 300.0 },
+				{ name: 'Grimsby', value: 655.0 },
+				{ name: 'Guildford and Aldershot', value: 37130.0 },
+				{ name: 'Halifax', value: 2160.0 },
+				{ name: 'Harrogate', value: 2905.0 },
+				{ name: 'Hartlepool', value: 250.0 },
+				{ name: 'Hastings', value: 1385.0 },
+				{ name: 'Haverfordwest and Milford Haven', value: 340.0 },
+				{ name: 'Hawick and Kelso', value: 160.0 },
+				{ name: 'Hereford', value: 1190.0 },
+				{ name: 'Hexham', value: 345.0 },
+				{ name: 'High Wycombe and Aylesbury', value: 14965.0 },
+				{ name: 'Huddersfield', value: 2780.0 },
+				{ name: 'Hull', value: 2860.0 },
+				{ name: 'Huntingdon', value: 2145.0 },
+				{ name: 'Inverness', value: 1070.0 },
+				{ name: 'Ipswich', value: 5275.0 },
+				{ name: 'Isle of Wight', value: 795.0 },
+				{ name: 'Kendal', value: 795.0 },
+				{ name: 'Kettering and Wellingborough', value: 1695.0 },
+				{ name: 'Kilmarnock and Irvine', value: 515.0 },
+				{ name: "King's Lynn", value: 700.0 },
+				{ name: 'Kingsbridge and Dartmouth', value: 325.0 },
+				{ name: 'Lancaster and Morecambe', value: 870.0 },
+				{ name: 'Launceston', value: 185.0 },
+				{ name: 'Leamington Spa', value: 7400.0 },
+				{ name: 'Leeds', value: 17365.0 },
+				{ name: 'Leicester', value: 12550.0 },
+				{ name: 'Lincoln', value: 2975.0 },
+				{ name: 'Liskeard', value: 220.0 },
+				{ name: 'Liverpool', value: 6010.0 },
+				{ name: 'Livingston', value: 1310.0 },
+				{ name: 'Llandrindod Wells and Builth Wells', value: 140.0 },
+				{ name: 'Llanelli', value: 820.0 },
+				{ name: 'Lochgilphead', value: 50.0 },
+				{ name: 'London', value: 487035.0 },
+				{ name: 'Lowestoft', value: 620.0 },
+				{ name: 'Ludlow', value: 410.0 },
+				{ name: 'Luton', value: 22170.0 },
+				{ name: 'Malton', value: 290.0 },
+				{ name: 'Manchester', value: 48515.0 },
+				{ name: 'Mansfield', value: 1155.0 },
+				{ name: 'Margate and Ramsgate', value: 960.0 },
+				{ name: 'Medway', value: 5675.0 },
+				{ name: 'Merthyr Tydfil', value: 475.0 },
+				{ name: 'Middlesbrough and Stockton', value: 2515.0 },
+				{ name: 'Milton Keynes', value: 9950.0 },
+				{ name: 'Minehead', value: 120.0 },
+				{ name: 'Motherwell and Airdrie', value: 1370.0 },
+				{ name: 'Mull and Islay', value: 55.0 },
+				{ name: 'Newbury', value: 5305.0 },
+				{ name: 'Newcastle', value: 12065.0 },
+				{ name: 'Newport', value: 1680.0 },
+				{ name: 'Newry and Banbridge', value: 860.0 },
+				{ name: 'Newton Stewart', value: 0.0 },
+				{ name: 'Newtown and Welshpool', value: 190.0 },
+				{ name: 'Northallerton', value: 680.0 },
+				{ name: 'Northampton', value: 4620.0 },
+				{ name: 'Norwich', value: 6840.0 },
+				{ name: 'Nottingham', value: 9350.0 },
+				{ name: 'Oban', value: 120.0 },
+				{ name: 'Omagh and Strabane', value: 240.0 },
+				{ name: 'Orkney Islands', value: 110.0 },
+				{ name: 'Oswestry', value: 275.0 },
+				{ name: 'Oxford', value: 19310.0 },
+				{ name: 'Pembroke and Tenby', value: 160.0 },
+				{ name: 'Penrith', value: 365.0 },
+				{ name: 'Penzance', value: 1345.0 },
+				{ name: 'Perth', value: 760.0 },
+				{ name: 'Peterborough', value: 12985.0 },
+				{ name: 'Peterhead', value: 95.0 },
+				{ name: 'Pitlochry and Aberfeldy', value: 170.0 },
+				{ name: 'Plymouth', value: 2575.0 },
+				{ name: 'Poole', value: 2540.0 },
+				{ name: 'Portree', value: 95.0 },
+				{ name: 'Portsmouth', value: 5290.0 },
+				{ name: 'Preston', value: 3030.0 },
+				{ name: 'Pwllheli and Porthmadog', value: 120.0 },
+				{ name: 'Reading', value: 44405.0 },
+				{ name: 'Redruth and Truro', value: 1450.0 },
+				{ name: 'Rhyl', value: 785.0 },
+				{ name: 'Salisbury', value: 1455.0 },
+				{ name: 'Scarborough', value: 545.0 },
+				{ name: 'Scunthorpe', value: 395.0 },
+				{ name: 'Sheffield', value: 7230.0 },
+				{ name: 'Shetland Islands', value: 225.0 },
+				{ name: 'Shrewsbury', value: 1075.0 },
+				{ name: 'Sidmouth', value: 390.0 },
+				{ name: 'Skegness and Louth', value: 525.0 },
+				{ name: 'Skipton', value: 660.0 },
+				{ name: 'Slough and Heathrow', value: 64175.0 },
+				{ name: 'Southampton', value: 11625.0 },
+				{ name: 'Southend', value: 8830.0 },
+				{ name: 'Spalding', value: 290.0 },
+				{ name: 'St Andrews and Cupar', value: 175.0 },
+				{ name: 'St Austell and Newquay', value: 625.0 },
+				{ name: 'Stafford', value: 1250.0 },
+				{ name: 'Stevenage and Welwyn Garden City', value: 6360.0 },
+				{ name: 'Stoke-on-Trent', value: 3535.0 },
+				{ name: 'Stranraer', value: 0.0 },
+				{ name: 'Street and Wells', value: 700.0 },
+				{ name: 'Sunderland', value: 1410.0 },
+				{ name: 'Swansea', value: 1755.0 },
+				{ name: 'Swindon', value: 5445.0 },
+				{ name: 'Taunton', value: 890.0 },
+				{ name: 'Telford', value: 1660.0 },
+				{ name: 'Thetford and Mildenhall', value: 470.0 },
+				{ name: 'Thurso', value: 20.0 },
+				{ name: 'Torquay and Paignton', value: 945.0 },
+				{ name: 'Trowbridge', value: 2975.0 },
+				{ name: 'Tunbridge Wells', value: 6505.0 },
+				{ name: 'Turriff and Banff', value: 55.0 },
+				{ name: 'Tywyn and Dolgellau', value: 95.0 },
+				{ name: 'Ullapool', value: 50.0 },
+				{ name: 'Wadebridge', value: 235.0 },
+				{ name: 'Wakefield and Castleford', value: 1585.0 },
+				{ name: 'Warrington and Wigan', value: 5120.0 },
+				{ name: 'Western Isles', value: 190.0 },
+				{ name: 'Weston-super-Mare', value: 1245.0 },
+				{ name: 'Whitby', value: 85.0 },
+				{ name: 'Whitehaven', value: 145.0 },
+				{ name: 'Wick', value: 35.0 },
+				{ name: 'Wisbech', value: 295.0 },
+				{ name: 'Wolverhampton and Walsall', value: 4255.0 },
+				{ name: 'Worcester and Kidderminster', value: 6370.0 },
+				{ name: 'Workington', value: 325.0 },
+				{ name: 'Worksop and Retford', value: 500.0 },
+				{ name: 'Worthing', value: 2105.0 },
+				{ name: 'Wrexham', value: 480.0 },
+				{ name: 'Yeovil', value: 1415.0 },
+				{ name: 'York', value: 4725.0 }
+			];
+
+			data.sort(function (a, b) {
+				return a.value - b.value;
+			});
+
+			const mapOption = {
+				visualMap: {
+					left: 'right',
+					min: 500000,
+					max: 38000000,
+					inRange: {
+						// prettier-ignore
+						color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+					},
+					text: ['High', 'Low'],
+					calculable: true
+				},
+				series: [
+					{
+						id: 'population',
+						type: 'map',
+						roam: true,
+						map: 'USA',
+						animationDurationUpdate: 1000,
+						universalTransition: true,
+						data: data
+					}
+				]
+			};
+
+			const barOption = {
+				xAxis: {
+					type: 'value'
+				},
+				yAxis: {
+					type: 'category',
+					axisLabel: {
+						rotate: 0
+					},
+					data: data.map(function (item) {
+						return item.name;
+					})
+				},
+				animationDurationUpdate: 1000,
+				series: {
+					type: 'bar',
+					id: 'population',
+					data: data.map(function (item) {
+						return item.value;
+					}),
+					universalTransition: true
+				}
+			};
+
+			let currentOption = mapOption;
+			myChart.setOption(mapOption);
+			setInterval(function () {
+				currentOption = currentOption === mapOption ? barOption : mapOption;
+				myChart.setOption(currentOption, true);
+			}, 3000);
+
+			// option = barOption;
+			// setInterval(() => {
+			// 	option = option === mapOption ? barOption : mapOption;
+			// 	// Use the notMerge form to remove the axes
+			// 	myChart.setOption(option, true);
+			// }, 2000);
+
+		});
+
+		if (option && typeof option === 'object') {
+			myChart.setOption(option);
+		}
+
+		window.addEventListener('resize', myChart.resize);
+	</script>
+</body>
+
+</html>
